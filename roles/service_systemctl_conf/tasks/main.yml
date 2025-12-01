@@ -26,6 +26,13 @@
     group: admin
     mode: "0644"
 
+- name: daemon-reload and enable service
+  become: true
+  systemd_service:
+    daemon_reload: true
+    name: "{{ server_name }}.service"
+    enabled: true
+
 - name: pull latest docker image for server
   become: true
   shell: |
@@ -36,4 +43,3 @@
   service:
     name: "{{ server_name }}"
     state: restarted
-    enabled: true
