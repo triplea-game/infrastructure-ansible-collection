@@ -14,12 +14,12 @@
 - name: run flyway docker container
   command: |
     docker container run \
+        --env FLYWAY_PASSWORD="{{ database_password }}" \
         --network host \
         {{ flyway_image }} \
         -locations=filesystem:/flyway/sql \
         -connectRetries=4 \
         -user={{ database_user }} \
-        -password="{{ database_password }}" \
         -url=jdbc:postgresql://{{ database_host }}:{{ database_port }}/{{ database_name }} \
         -ignoreMigrationPatterns=repeatable:missing \
         migrate
